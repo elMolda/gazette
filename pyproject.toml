@@ -3,7 +3,7 @@ name = "gazette"
 version = "0.1.0"
 description = "Personalized e-reader digest generator from RSS feeds and URLs"
 authors = [
-    {name = "David Molano",email = "david97molano@gmail.com"}
+    {name = "Elmolda Software LLC", email = "david97molano@gmail.com"}
 ]
 readme = "README.md"
 requires-python = ">=3.12"

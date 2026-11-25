@@ -512,7 +512,7 @@ def generar_epub(
     book.set_identifier(f"urn:uuid:edicion-kindle-{stamp}")
     book.set_title(titulo_edicion)
     book.set_language(idioma_meta)
-    book.add_author("The elmolda gazette")
+    book.add_author("Elmolda Software LLC")
 
     css_item = epub.EpubItem(
         uid="style_edicion_kindle",
@@ -663,8 +663,8 @@ def main() -> int:
         "-O",
         type=str.lower,
         choices=["random", "reciente", "cronologico"],
-        default="random",
-        help="Orden de selección: 'random' (aleatorio) o 'reciente'/'cronologico' (según orden RSS, lo último publicado primero). Por defecto: 'random'.",
+        default=None,
+        help="Orden de selección: 'reciente'/'cronologico' (lo último publicado primero en RSS) o 'random' (aleatorio). Por defecto: 'reciente' para periódico, 'random' para revista.",
     )
     parser.add_argument(
         "-n",
@@ -726,8 +726,6 @@ def main() -> int:
     if args.cantidad is not None and args.cantidad <= 0:
         parser.error("--cantidad / -n debe ser un número entero mayor a 0.")
 
-    orden = "reciente" if args.orden == "cronologico" else args.orden
-
     # Determinar tipo de publicación (periódico vs revista)
     if args.flag_periodico:
         tipo = "periodico"
@@ -748,6 +746,14 @@ def main() -> int:
     # Por defecto, mantiene el comportamiento original (revista / ensayo)
     if tipo is None:
         tipo = "revista"
+
+    # Orden de selección:
+    # Para periódico siempre debe ser 'reciente' por defecto para capturar únicamente
+    # las noticias de actualidad recién publicadas. Para revista es 'random' por defecto.
+    if args.orden is not None:
+        orden = "reciente" if args.orden == "cronologico" else args.orden
+    else:
+        orden = "reciente" if tipo == "periodico" else "random"
 
     ritmo_filtro = "diario" if tipo == "periodico" else "ensayo"
     objetivo_cantidad = (
