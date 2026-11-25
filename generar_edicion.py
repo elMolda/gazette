@@ -28,33 +28,55 @@ DEFAULT_TEMPLATES_DIR = BASE_DIR / "templates"
 DEFAULT_CSS_PATH = BASE_DIR / "styles" / "edicion_kindle.css"
 NOMBRE_PLANTILLA = "capitulo_epub.xhtml.j2"
 
-# Fuentes sin paywall agrupadas por idioma[cite: 2]
-FUENTES: Dict[str, List[Dict[str, str]]] = {
+# Fuentes sin paywall agrupadas por idioma y catalogadas por tema y ritmo
+FUENTES: Dict[str, List[Dict[str, object]]] = {
     "en": [
-        {"nombre": "Aeon", "rss": "https://aeon.co/feed.rss"},
-        {"nombre": "Psyche", "rss": "https://psyche.co/feed.rss"},
-        {"nombre": "The Public Domain Review", "rss": "https://publicdomainreview.org/rss.xml"},
-        {"nombre": "Longreads", "rss": "https://longreads.com/feed/"},
-        {"nombre": "Kottke", "rss": "https://feeds.kottke.org/main"},
-        {"nombre": "Nautilus", "rss": "https://nautil.us/feed/"},
-        {"nombre": "Works in Progress", "rss": "https://worksinprogress.co/feed/"},
-        {"nombre": "Astral Codex Ten", "rss": "https://www.astralcodexten.com/feed"},
-        {"nombre": "Lobsters", "rss": "https://lobste.rs/rss"},
-        {"nombre": "Slashdot", "rss": "https://rss.slashdot.org/Slashdot/slashdotMain"},
-        {"nombre": "Netflix TechBlog", "rss": "https://netflixtechblog.com/feed"},
+        # Internacional / actualidad diaria
+        {"nombre": "BBC World", "rss": "https://feeds.bbci.co.uk/news/world/rss.xml", "tema": "internacional", "ritmo": "diario"},
+        {"nombre": "The Guardian World", "rss": "https://www.theguardian.com/world/rss", "tema": "internacional", "ritmo": "diario"},
+        {"nombre": "Al Jazeera English", "rss": "https://www.aljazeera.com/xml/rss/all.xml", "tema": "internacional", "ritmo": "diario"},
+
+        # Ciencia
+        {"nombre": "NASA Breaking News", "rss": "https://www.nasa.gov/rss/dyn/breaking_news.rss", "tema": "ciencia", "ritmo": "diario"},
+        {"nombre": "Nautilus", "rss": "https://nautil.us/feed/", "tema": "ciencia", "ritmo": "ensayo"},
+
+        # Tecnología
+        {"nombre": "Lobsters", "rss": "https://lobste.rs/rss", "tema": "tecnologia", "ritmo": "diario"},
+        {"nombre": "Slashdot", "rss": "https://rss.slashdot.org/Slashdot/slashdotMain", "tema": "tecnologia", "ritmo": "diario"},
+        {"nombre": "Netflix TechBlog", "rss": "https://netflixtechblog.com/feed", "tema": "tecnologia", "ritmo": "ensayo"},
+        {"nombre": "Kottke", "rss": "https://feeds.kottke.org/main", "tema": "tecnologia", "ritmo": "diario"},
+
+        # Cultura, filosofía y ensayo largo
+        {"nombre": "Aeon", "rss": "https://aeon.co/feed.rss", "tema": "cultura_filosofia", "ritmo": "ensayo"},
+        {"nombre": "Psyche", "rss": "https://psyche.co/feed.rss", "tema": "cultura_filosofia", "ritmo": "ensayo"},
+        {"nombre": "The Public Domain Review", "rss": "https://publicdomainreview.org/rss.xml", "tema": "cultura_filosofia", "ritmo": "ensayo"},
+        {"nombre": "Longreads", "rss": "https://longreads.com/feed/", "tema": "cultura_filosofia", "ritmo": "ensayo"},
+        {"nombre": "Works in Progress", "rss": "https://worksinprogress.co/feed/", "tema": "cultura_filosofia", "ritmo": "ensayo"},
+        {"nombre": "Astral Codex Ten", "rss": "https://www.astralcodexten.com/feed", "tema": "cultura_filosofia", "ritmo": "ensayo"},
     ],
     "es": [
-        {"nombre": "Gatopardo", "rss": "https://gatopardo.com/feed/"},
-        {"nombre": "Letras Libres", "rss": "https://letraslibres.com/feed/"},
-        {"nombre": "Jot Down", "rss": "https://www.jotdown.es/feed/"},
-        {"nombre": "Ethic", "rss": "https://ethic.es/feed/"},
-        {"nombre": "Revista Anfibia", "rss": "https://www.revistaanfibia.com/feed/"},
-        {"nombre": "Cuaderno de Cultura Científica", "rss": "https://culturacientifica.com/feed/"},
-        {"nombre": "Razón Pública", "rss": "https://razonpublica.com/feed/"},
-        {"nombre": "CTXT", "rss": "https://ctxt.es/es/?tpl=20"},
-        {"nombre": "The Conversation", "rss": "https://theconversation.com/es/articles.atom"},
-        {"nombre": "Nueva Sociedad", "rss": "https://nuso.org/rss/"},
-        {"nombre": "Politikon", "rss": "https://politikon.es/feed/"},
+        # Internacional / actualidad diaria
+        {"nombre": "BBC Mundo", "rss": "https://feeds.bbci.co.uk/mundo/rss.xml", "tema": "internacional", "ritmo": "diario"},
+        {"nombre": "DW Español", "rss": "https://rss.dw.com/rdf/rss-es-all", "tema": "internacional", "ritmo": "diario"},
+
+        # Política y economía
+        {"nombre": "Politikon", "rss": "https://politikon.es/feed/", "tema": "politica_economia", "ritmo": "ensayo"},
+        {"nombre": "Nueva Sociedad", "rss": "https://nuso.org/rss/", "tema": "politica_economia", "ritmo": "ensayo"},
+        {"nombre": "Razón Pública", "rss": "https://razonpublica.com/feed/", "tema": "politica_economia", "ritmo": "ensayo"},
+        {"nombre": "ElDiario.es", "rss": "https://www.eldiario.es/rss/", "tema": "politica_economia", "ritmo": "diario"},
+        {"nombre": "CTXT", "rss": "https://ctxt.es/es/?tpl=20", "tema": "politica_economia", "ritmo": "ensayo"},
+        {"nombre": "La Silla Vacía", "rss": "https://www.lasillavacia.com/rss/", "tema": "politica_economia", "ritmo": "diario"},
+
+        # Ciencia
+        {"nombre": "Cuaderno de Cultura Científica", "rss": "https://culturacientifica.com/feed/", "tema": "ciencia", "ritmo": "ensayo"},
+        {"nombre": "The Conversation", "rss": "https://theconversation.com/es/articles.atom", "tema": "ciencia", "ritmo": "diario"},
+
+        # Cultura, filosofía y ensayo largo
+        {"nombre": "Jot Down", "rss": "https://www.jotdown.es/feed/", "tema": "cultura_filosofia", "ritmo": "ensayo"},
+        {"nombre": "Letras Libres", "rss": "https://letraslibres.com/feed/", "tema": "cultura_filosofia", "ritmo": "ensayo"},
+        {"nombre": "Ethic", "rss": "https://ethic.es/feed/", "tema": "cultura_filosofia", "ritmo": "ensayo"},
+        {"nombre": "Gatopardo", "rss": "https://gatopardo.com/feed/", "tema": "cultura_filosofia", "ritmo": "ensayo"},
+        {"nombre": "Revista Anfibia", "rss": "https://www.revistaanfibia.com/feed/", "tema": "cultura_filosofia", "ritmo": "ensayo"},
     ],
 }
 
@@ -76,9 +98,21 @@ TEXTOS_POR_IDIOMA: Dict[str, Dict[str, str]] = {
 }
 
 VELOCIDAD_LECTURA_PPM = 220
-MIN_MINUTOS_LECTURA = 4
-MAX_MINUTOS_LECTURA = 22
-OBJETIVO_ARTICULOS = 3
+
+# Periódico (noticias de actualidad diaria)
+MIN_MINUTOS_PERIODICO = 1
+MAX_MINUTOS_PERIODICO = 12
+OBJETIVO_ARTICULOS_PERIODICO = 5
+
+# Revista (ensayos y lecturas de fondo)
+MIN_MINUTOS_REVISTA = 4
+MAX_MINUTOS_REVISTA = 25
+OBJETIVO_ARTICULOS_REVISTA = 3
+
+# Valores retrocompatibles por defecto
+MIN_MINUTOS_LECTURA = MIN_MINUTOS_REVISTA
+MAX_MINUTOS_LECTURA = MAX_MINUTOS_REVISTA
+OBJETIVO_ARTICULOS = OBJETIVO_ARTICULOS_REVISTA
 
 
 def calcular_minutos_lectura(texto_plano: str) -> int:
@@ -238,15 +272,17 @@ def extraer_articulos_desde_archivo(
 
 
 def extraer_articulos_fuente(
-    fuente: Dict[str, str],
+    fuente: Dict[str, object],
     idioma: str,
     max_articulos: int = 1,
     orden: str = "random",
     urls_excluidas: Optional[set[str]] = None,
+    min_minutos: int = MIN_MINUTOS_LECTURA,
+    max_minutos: int = MAX_MINUTOS_LECTURA,
 ) -> List[Dict]:
     """
     Consulta el RSS de una fuente y devuelve hasta max_articulos válidos
-    cuyo texto íntegro tenga entre MIN_MINUTOS_LECTURA y MAX_MINUTOS_LECTURA.
+    cuyo texto íntegro tenga entre min_minutos y max_minutos de lectura.
     Si orden == 'random', baraja las entradas recientes.
     Si orden == 'reciente', respeta el orden de llegada del feed (lo último publicado primero).
     """
@@ -293,7 +329,7 @@ def extraer_articulos_fuente(
         palabras = len(texto_plano.split())
         minutos = calcular_minutos_lectura(texto_plano)
 
-        if MIN_MINUTOS_LECTURA <= minutos <= MAX_MINUTOS_LECTURA:
+        if min_minutos <= minutos <= max_minutos:
             print(f"  [OK] '{titulo}' ({minutos} min, {palabras} palabras)")
             articulos_encontrados.append(
                 {
@@ -311,18 +347,29 @@ def extraer_articulos_fuente(
     if not articulos_encontrados:
         print(
             f"  [-] Ningún candidato cumplió el rango de "
-            f"{MIN_MINUTOS_LECTURA}-{MAX_MINUTOS_LECTURA} min en {fuente['nombre']}"
+            f"{min_minutos}-{max_minutos} min en {fuente['nombre']}"
         )
     return articulos_encontrados
 
 
 def extraer_articulo_valido(
-    fuente: Dict[str, str], idioma: str, orden: str = "random"
+    fuente: Dict[str, object],
+    idioma: str,
+    orden: str = "random",
+    min_minutos: int = MIN_MINUTOS_LECTURA,
+    max_minutos: int = MAX_MINUTOS_LECTURA,
 ) -> Optional[Dict]:
     """
     Función de compatibilidad: extrae el primer artículo válido de una fuente.
     """
-    arts = extraer_articulos_fuente(fuente, idioma, max_articulos=1, orden=orden)
+    arts = extraer_articulos_fuente(
+        fuente,
+        idioma,
+        max_articulos=1,
+        orden=orden,
+        min_minutos=min_minutos,
+        max_minutos=max_minutos,
+    )
     return arts[0] if arts else None
 
 
@@ -330,14 +377,18 @@ def seleccionar_articulos(
     idioma_arg: str,
     objetivo: int = OBJETIVO_ARTICULOS,
     filtro_fuente: Optional[str] = None,
+    filtro_ritmo: Optional[str] = None,
+    filtro_tema: Optional[str] = None,
     orden: str = "random",
+    min_minutos: int = MIN_MINUTOS_REVISTA,
+    max_minutos: int = MAX_MINUTOS_REVISTA,
 ) -> List[Dict]:
     """
     Selecciona hasta `objetivo` artículos desde las fuentes del idioma elegido ('en', 'es' o 'mix').
-    Permite filtrar por nombre de fuente y definir el orden ('random' o 'reciente').
+    Permite filtrar por nombre de fuente, ritmo ('diario'/'ensayo') y tema, y definir el orden.
     """
     if idioma_arg == "mix":
-        pool: List[tuple[str, Dict[str, str]]] = [
+        pool: List[tuple[str, Dict[str, object]]] = [
             ("en", f) for f in FUENTES["en"]
         ] + [
             ("es", f) for f in FUENTES["es"]
@@ -347,14 +398,29 @@ def seleccionar_articulos(
     else:
         raise ValueError(f"Idioma no soportado: {idioma_arg}")
 
+    if filtro_ritmo:
+        pool = [(lang, f) for lang, f in pool if f.get("ritmo") == filtro_ritmo]
+
+    if filtro_tema:
+        pool = [(lang, f) for lang, f in pool if f.get("tema") == filtro_tema]
+
     if filtro_fuente:
         pool = [
-            (lang, f) for lang, f in pool if coincide_fuente(f["nombre"], filtro_fuente)
+            (lang, f) for lang, f in pool if coincide_fuente(str(f["nombre"]), filtro_fuente)
         ]
-        if not pool:
-            raise RuntimeError(
-                f"No se encontró ninguna fuente que coincida con '{filtro_fuente}' en el idioma '{idioma_arg}'."
-            )
+
+    if not pool:
+        detalles = []
+        if filtro_fuente:
+            detalles.append(f"fuente '{filtro_fuente}'")
+        if filtro_ritmo:
+            detalles.append(f"ritmo '{filtro_ritmo}'")
+        if filtro_tema:
+            detalles.append(f"tema '{filtro_tema}'")
+        filtros_str = ", ".join(detalles) if detalles else "los filtros solicitados"
+        raise RuntimeError(
+            f"No se encontró ninguna fuente que coincida con {filtros_str} en el idioma '{idioma_arg}'."
+        )
 
     fuentes_candidatas = list(pool)
     if orden == "random":
@@ -367,7 +433,13 @@ def seleccionar_articulos(
     if len(fuentes_candidatas) == 1:
         lang, fuente = fuentes_candidatas[0]
         return extraer_articulos_fuente(
-            fuente, lang, max_articulos=objetivo, orden=orden, urls_excluidas=urls_vistas
+            fuente,
+            lang,
+            max_articulos=objetivo,
+            orden=orden,
+            urls_excluidas=urls_vistas,
+            min_minutos=min_minutos,
+            max_minutos=max_minutos,
         )
 
     # Si hay varias fuentes, distribuimos: primero un artículo por fuente
@@ -375,7 +447,13 @@ def seleccionar_articulos(
         if len(seleccionados) >= objetivo:
             break
         arts = extraer_articulos_fuente(
-            fuente, lang, max_articulos=1, orden=orden, urls_excluidas=urls_vistas
+            fuente,
+            lang,
+            max_articulos=1,
+            orden=orden,
+            urls_excluidas=urls_vistas,
+            min_minutos=min_minutos,
+            max_minutos=max_minutos,
         )
         if arts:
             seleccionados.extend(arts)
@@ -387,7 +465,13 @@ def seleccionar_articulos(
             if faltantes <= 0:
                 break
             arts = extraer_articulos_fuente(
-                fuente, lang, max_articulos=faltantes, orden=orden, urls_excluidas=urls_vistas
+                fuente,
+                lang,
+                max_articulos=faltantes,
+                orden=orden,
+                urls_excluidas=urls_vistas,
+                min_minutos=min_minutos,
+                max_minutos=max_minutos,
             )
             if arts:
                 seleccionados.extend(arts)
@@ -402,6 +486,7 @@ def generar_epub(
     ruta_css: Path,
     archivo_salida: Path,
     nombre_plantilla: str = NOMBRE_PLANTILLA,
+    tipo_edicion: str = "revista",
 ) -> Path:
     if not directorio_plantillas.exists():
         raise FileNotFoundError(f"No existe el directorio de plantillas: {directorio_plantillas}")
@@ -416,11 +501,18 @@ def generar_epub(
 
     fecha_hoy = datetime.now().strftime("%Y-%m-%d")
     idioma_meta = "en" if idioma_edicion == "en" else "es"
-    titulo_edicion = (
-        f"Sunday Reading Edition · {fecha_hoy}"
-        if idioma_meta == "en"
-        else f"Edición Dominical · {fecha_hoy}"
-    )
+    if tipo_edicion == "periodico":
+        titulo_edicion = (
+            f"Daily Newspaper · {fecha_hoy}"
+            if idioma_meta == "en"
+            else f"Periódico Diario · {fecha_hoy}"
+        )
+    else:
+        titulo_edicion = (
+            f"Sunday Reading Edition · {fecha_hoy}"
+            if idioma_meta == "en"
+            else f"Edición Dominical · {fecha_hoy}"
+        )
     minutos_totales = sum(a["minutos"] for a in articulos)
 
     book = epub.EpubBook()
@@ -516,7 +608,7 @@ def enviar_epub_a_kindle(ruta_epub: Path) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Selecciona artículos por idioma, fuente y duración, genera un EPUB con Jinja2 y opcionalmente lo envía a Kindle."
+        description="Selecciona artículos por idioma, tipo (periódico/revista), fuente y duración, genera un EPUB con Jinja2 y opcionalmente lo envía a Kindle."
     )
     parser.add_argument(
         "idioma",
@@ -524,6 +616,37 @@ def main() -> int:
         choices=["en", "es", "mix"],
         default=None,
         help="Idioma de las fuentes a consultar ('en', 'es' o 'mix'). Por defecto: 'es'.",
+    )
+    parser.add_argument(
+        "-t",
+        "--tipo",
+        "--ritmo",
+        dest="tipo",
+        type=str.lower,
+        choices=["periodico", "diario", "revista", "ensayo"],
+        default=None,
+        help="Tipo de publicación: 'periodico'/'diario' (noticias de actualidad) o 'revista'/'ensayo' (ensayos largos). Por defecto: 'revista'.",
+    )
+    parser.add_argument(
+        "--periodico",
+        "--diario",
+        dest="flag_periodico",
+        action="store_true",
+        help="Atajo para generar un periódico (--tipo periodico).",
+    )
+    parser.add_argument(
+        "--revista",
+        "--ensayo",
+        dest="flag_revista",
+        action="store_true",
+        help="Atajo para generar una revista de ensayos (--tipo revista).",
+    )
+    parser.add_argument(
+        "--tema",
+        "--seccion",
+        type=str.lower,
+        default=None,
+        help="Filtra fuentes por tema ('internacional', 'ciencia', 'tecnologia', 'politica_economia', 'cultura_filosofia').",
     )
     parser.add_argument(
         "-f",
@@ -555,15 +678,27 @@ def main() -> int:
         "-n",
         "--cantidad",
         type=int,
-        default=OBJETIVO_ARTICULOS,
-        help=f"Cantidad de artículos a incluir en la edición (por defecto: {OBJETIVO_ARTICULOS}).",
+        default=None,
+        help="Cantidad de artículos a incluir en la edición (por defecto: 5 para periódico, 3 para revista).",
+    )
+    parser.add_argument(
+        "--min-minutos",
+        type=int,
+        default=None,
+        help="Tiempo mínimo de lectura por artículo en minutos.",
+    )
+    parser.add_argument(
+        "--max-minutos",
+        type=int,
+        default=None,
+        help="Tiempo máximo de lectura por artículo en minutos.",
     )
     parser.add_argument(
         "-o",
         "--output",
         type=Path,
         default=None,
-        help="Ruta de salida del archivo .epub (por defecto: ./output/edicion_<idioma>_YYYY-MM-DD.epub).",
+        help="Ruta de salida del archivo .epub (por defecto: ./output/<tipo>_<idioma>_YYYY-MM-DD.epub).",
     )
     parser.add_argument(
         "--templates-dir",
@@ -596,10 +731,48 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    if args.cantidad <= 0:
+    if args.cantidad is not None and args.cantidad <= 0:
         parser.error("--cantidad / -n debe ser un número entero mayor a 0.")
 
     orden = "reciente" if args.orden == "cronologico" else args.orden
+
+    # Determinar tipo de publicación (periódico vs revista)
+    if args.flag_periodico:
+        tipo = "periodico"
+    elif args.flag_revista:
+        tipo = "revista"
+    elif args.tipo:
+        tipo = "periodico" if args.tipo in ["periodico", "diario"] else "revista"
+    else:
+        tipo = None
+
+    # Si no se pasó tipo explícito pero se pasó una fuente, deducir el tipo a partir de esa fuente
+    if tipo is None and args.fuente:
+        fuentes_todas = FUENTES["en"] + FUENTES["es"]
+        coincidentes = [f for f in fuentes_todas if coincide_fuente(str(f["nombre"]), args.fuente)]
+        if coincidentes:
+            tipo = "periodico" if coincidentes[0].get("ritmo") == "diario" else "revista"
+
+    # Por defecto, mantiene el comportamiento original (revista / ensayo)
+    if tipo is None:
+        tipo = "revista"
+
+    ritmo_filtro = "diario" if tipo == "periodico" else "ensayo"
+    objetivo_cantidad = (
+        args.cantidad
+        if args.cantidad is not None
+        else (OBJETIVO_ARTICULOS_PERIODICO if tipo == "periodico" else OBJETIVO_ARTICULOS_REVISTA)
+    )
+    min_minutos = (
+        args.min_minutos
+        if args.min_minutos is not None
+        else (MIN_MINUTOS_PERIODICO if tipo == "periodico" else MIN_MINUTOS_REVISTA)
+    )
+    max_minutos = (
+        args.max_minutos
+        if args.max_minutos is not None
+        else (MAX_MINUTOS_PERIODICO if tipo == "periodico" else MAX_MINUTOS_REVISTA)
+    )
 
     try:
         if args.send_only:
@@ -628,8 +801,8 @@ def main() -> int:
         else:
             idioma = args.idioma
             if args.fuente and idioma is None:
-                matches_en = [f for f in FUENTES["en"] if coincide_fuente(f["nombre"], args.fuente)]
-                matches_es = [f for f in FUENTES["es"] if coincide_fuente(f["nombre"], args.fuente)]
+                matches_en = [f for f in FUENTES["en"] if coincide_fuente(str(f["nombre"]), args.fuente)]
+                matches_es = [f for f in FUENTES["es"] if coincide_fuente(str(f["nombre"]), args.fuente)]
                 if matches_en and not matches_es:
                     idioma = "en"
                 elif matches_es and not matches_en:
@@ -643,15 +816,20 @@ def main() -> int:
 
             seleccionados = seleccionar_articulos(
                 idioma_arg=idioma,
-                objetivo=args.cantidad,
+                objetivo=objetivo_cantidad,
                 filtro_fuente=args.fuente,
+                filtro_ritmo=ritmo_filtro,
+                filtro_tema=args.tema,
                 orden=orden,
+                min_minutos=min_minutos,
+                max_minutos=max_minutos,
             )
             if not seleccionados:
                 raise RuntimeError("No se pudo extraer ningún artículo válido en esta ejecución.")
 
         fecha_hoy = datetime.now().strftime("%Y-%m-%d")
-        salida = args.output or (Path("output") / f"edicion_{idioma}_{fecha_hoy}.epub")
+        prefijo_salida = "periodico" if tipo == "periodico" else "revista"
+        salida = args.output or (Path("output") / f"{prefijo_salida}_{idioma}_{fecha_hoy}.epub")
 
         epub_generado = generar_epub(
             articulos=seleccionados,
@@ -660,11 +838,13 @@ def main() -> int:
             ruta_css=args.css,
             archivo_salida=salida,
             nombre_plantilla=args.template,
+            tipo_edicion=tipo,
         )
 
         minutos_totales = sum(a["minutos"] for a in seleccionados)
+        desc_tipo = "periódico" if tipo == "periodico" else "revista"
         print(
-            f"\nListo: {len(seleccionados)} artículos ({minutos_totales} min) "
+            f"\nListo ({desc_tipo}): {len(seleccionados)} artículos ({minutos_totales} min) "
             f"en '{epub_generado.resolve()}'."
         )
 
@@ -673,6 +853,10 @@ def main() -> int:
             print(f"Enviado por correo a: {os.getenv('KINDLE_EMAIL')}")
 
         return 0
+
+    except Exception as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        return 1
 
     except Exception as exc:
         print(f"Error: {exc}", file=sys.stderr)

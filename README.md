@@ -1,6 +1,12 @@
 # Gazette
 
-Herramienta de automatización y CLI en Python para consultar feeds RSS y URLs de ensayos o artículos largos, generar un EPUB optimizado y enviarlo automáticamente a Kindle por correo.
+Herramienta de automatización y CLI en Python para consultar feeds RSS y URLs directas, generar un EPUB optimizado y enviarlo automáticamente a Kindle por correo.
+
+Permite generar dos tipos de publicaciones:
+- **Periódico diario (`--periodico` / `-t periodico`):** Actualidad y noticias del día (1 a 12 min de lectura, 5 artículos por defecto).
+- **Revista de ensayos (`--revista` / `-t revista`):** Ensayos largos, análisis y lecturas de fondo (4 a 25 min de lectura, 3 artículos por defecto).
+
+---
 
 ## Requisitos
 
@@ -19,42 +25,61 @@ Copia `.env.example` a `.env` y configura tus credenciales SMTP y tu correo de K
 cp .env.example .env
 ```
 
+---
+
 ## Uso
 
-### 1. Desde feeds RSS
+### 1. Periódico diario (noticias de actualidad)
+
+Consulta fuentes de actualidad (BBC Mundo, DW, NASA, Lobsters, ElDiario.es, etc.):
 
 ```bash
-# Edición en español (por defecto)
-poetry run python generar_edicion.py
+# Periódico en español (5 artículos breves)
+poetry run python generar_edicion.py --periodico
 
-# Filtrar por fuente (coincidencia parcial o exacta)
-poetry run python generar_edicion.py -f "Razón Pública" -n 2
+# Periódico en inglés con las noticias más recientes
+poetry run python generar_edicion.py en --periodico --orden reciente
 
-# Orden cronológico más reciente en lugar de aleatorio
-poetry run python generar_edicion.py -f aeon --orden reciente
-
-# Seleccionar idioma ('es', 'en' o 'mix')
-poetry run python generar_edicion.py mix -n 3
+# Filtrar por tema específico (internacional, tecnologia, ciencia, politica_economia)
+poetry run python generar_edicion.py --periodico --tema internacional -n 4
 ```
 
-### 2. Desde un archivo de URLs
+### 2. Revista (ensayos y lecturas de fondo)
 
-Permite generar el EPUB directamente a partir de URLs listadas en un archivo de texto (una por línea), omitiendo restricciones de tiempo de lectura:
+Comportamiento por defecto. Consulta fuentes de ensayo (Jot Down, Gatopardo, Aeon, Razón Pública, Ethic, etc.):
+
+```bash
+# Revista dominical en español (3 artículos)
+poetry run python generar_edicion.py --revista
+# o simplemente:
+poetry run python generar_edicion.py
+
+# Filtrar por fuente específica
+poetry run python generar_edicion.py -f "Jot Down" -n 2
+
+# Filtrar por tema dentro de la revista
+poetry run python generar_edicion.py --revista --tema ciencia
+```
+
+### 3. Desde un archivo de URLs
+
+Genera la edición a partir de enlaces directos guardados en un archivo de texto (uno por línea), omitiendo restricciones de tiempo de lectura:
 
 ```bash
 poetry run python generar_edicion.py -u articulos.txt
 ```
 
-### 3. Envío a Kindle
+### 4. Envío automático a Kindle
 
 Agrega `--send` a cualquier comando para despachar el archivo generado vía SMTP a tu dirección Kindle:
 
 ```bash
+poetry run python generar_edicion.py --periodico --send
 poetry run python generar_edicion.py -u articulos.txt --send
 ```
 
-También puedes reenviar un archivo existente sin volver a consultar la web:
+Reenviar un archivo existente sin regenerar:
 
 ```bash
-poetry run python generar_edicion.py --send-only output/edicion_es_2026-11-25.epub
+poetry run python generar_edicion.py --send-only output/periodico_es_2026-11-25.epub
 ```
