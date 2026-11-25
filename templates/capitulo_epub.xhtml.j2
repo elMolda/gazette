@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ idioma }}" lang="{{ idioma }}">
+<head>
+  <title>{{ titulo | e }}</title>
+  <link rel="stylesheet" type="text/css" href="../Styles/edicion_kindle.css"/>
+</head>
+<body>
+  <div class="header">
+    <p class="edition">{{ titulo_edicion | e }} · {{ minutos_totales }} {{ textos.min_total | e }}</p>
+    <h1>{{ titulo | e }}</h1>
+    <p class="meta">
+      {{ fuente | e }} · {{ minutos }} {{ textos.min_unidad | e }} ({{ palabras }} {{ textos.palabras | e }})
+    </p>
+  </div>
+
+  <div class="content">
+    {{ cuerpo_html | safe }}
+  </div>
+
+  {% if url %}
+  <p class="source-link">{{ textos.fuente | e }}: {{ url | e }}</p>
+  {% endif %}
+</body>
+</html>

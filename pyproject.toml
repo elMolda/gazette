@@ -1,0 +1,26 @@
+[project]
+name = "gazette"
+version = "0.1.0"
+description = "Personalized e-reader digest generator from RSS feeds and URLs"
+authors = [
+    {name = "David Molano",email = "david97molano@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ebooklib (>=0.21,<0.22)",
+    "beautifulsoup4 (>=4.15.0,<5.0.0)",
+    "trafilatura (>=2.4.0,<3.0.0)",
+    "httpx (>=0.28.1,<0.29.0)",
+    "python-dotenv (>=1.2.4,<2.0.0)",
+    "jinja2 (>=3.1.6,<4.0.0)",
+    "feedparser (>=6.0.14,<7.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false
