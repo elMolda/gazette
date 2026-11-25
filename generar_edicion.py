@@ -502,17 +502,9 @@ def generar_epub(
     fecha_hoy = datetime.now().strftime("%Y-%m-%d")
     idioma_meta = "en" if idioma_edicion == "en" else "es"
     if tipo_edicion == "periodico":
-        titulo_edicion = (
-            f"Daily Newspaper · {fecha_hoy}"
-            if idioma_meta == "en"
-            else f"Periódico Diario · {fecha_hoy}"
-        )
+        titulo_edicion = f"The elmolda gazette · {fecha_hoy}"
     else:
-        titulo_edicion = (
-            f"Sunday Reading Edition · {fecha_hoy}"
-            if idioma_meta == "en"
-            else f"Edición Dominical · {fecha_hoy}"
-        )
+        titulo_edicion = f"The elmolda gazette magazine · {fecha_hoy}"
     minutos_totales = sum(a["minutos"] for a in articulos)
 
     book = epub.EpubBook()
@@ -520,7 +512,7 @@ def generar_epub(
     book.set_identifier(f"urn:uuid:edicion-kindle-{stamp}")
     book.set_title(titulo_edicion)
     book.set_language(idioma_meta)
-    book.add_author("Edición Personal")
+    book.add_author("The elmolda gazette")
 
     css_item = epub.EpubItem(
         uid="style_edicion_kindle",
@@ -569,7 +561,7 @@ def generar_epub(
     return archivo_salida
 
 
-def enviar_epub_a_kindle(ruta_epub: Path) -> None:
+def enviar_epub_a_kindle(ruta_epub: Path, asunto: Optional[str] = None) -> None:
     """Envía el archivo .epub por correo SMTP a la dirección @kindle.com."""
     if not ruta_epub.exists():
         raise FileNotFoundError(f"No existe el archivo EPUB: {ruta_epub}")
@@ -586,7 +578,7 @@ def enviar_epub_a_kindle(ruta_epub: Path) -> None:
     kindle_email = os.environ["KINDLE_EMAIL"]
 
     msg = EmailMessage()
-    msg["Subject"] = f"Edicion Kindle {datetime.now().strftime('%Y-%m-%d')}"
+    msg["Subject"] = asunto or f"Edicion Kindle {datetime.now().strftime('%Y-%m-%d')}"
     msg["From"] = smtp_user
     msg["To"] = kindle_email
     msg.set_content("Edición automática en formato EPUB para Kindle.")
@@ -828,7 +820,9 @@ def main() -> int:
                 raise RuntimeError("No se pudo extraer ningún artículo válido en esta ejecución.")
 
         fecha_hoy = datetime.now().strftime("%Y-%m-%d")
-        prefijo_salida = "periodico" if tipo == "periodico" else "revista"
+        prefijo_salida = (
+            "the_elmolda_gazette" if tipo == "periodico" else "the_elmolda_gazette_magazine"
+        )
         salida = args.output or (Path("output") / f"{prefijo_salida}_{idioma}_{fecha_hoy}.epub")
 
         epub_generado = generar_epub(
@@ -842,21 +836,24 @@ def main() -> int:
         )
 
         minutos_totales = sum(a["minutos"] for a in seleccionados)
-        desc_tipo = "periódico" if tipo == "periodico" else "revista"
+        desc_tipo = (
+            "The elmolda gazette" if tipo == "periodico" else "The elmolda gazette magazine"
+        )
         print(
             f"\nListo ({desc_tipo}): {len(seleccionados)} artículos ({minutos_totales} min) "
             f"en '{epub_generado.resolve()}'."
         )
 
         if args.send:
-            enviar_epub_a_kindle(epub_generado)
+            asunto_correo = (
+                f"The elmolda gazette · {fecha_hoy}"
+                if tipo == "periodico"
+                else f"The elmolda gazette magazine · {fecha_hoy}"
+            )
+            enviar_epub_a_kindle(epub_generado, asunto=asunto_correo)
             print(f"Enviado por correo a: {os.getenv('KINDLE_EMAIL')}")
 
         return 0
-
-    except Exception as exc:
-        print(f"Error: {exc}", file=sys.stderr)
-        return 1
 
     except Exception as exc:
         print(f"Error: {exc}", file=sys.stderr)
